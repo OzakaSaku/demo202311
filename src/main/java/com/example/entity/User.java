@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.entity.User;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @TableName("t_user")
 public class User {
 	
+	@TableId
     private String userId;
 	
     private String userName;
