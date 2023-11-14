@@ -1,6 +1,6 @@
 # 配置端口
 server:
-  port: 8888
+  port: 8080
   servlet:
     session:
       timeout: 21600
@@ -8,6 +8,7 @@ server:
 # 配置mysql数据库
 spring:
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/demo202311?useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
