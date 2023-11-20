@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset=" utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="renderer" content="webkit" />
+	<title>登录</title>
+	<link rel="shortcut icon" href="https://i.jpg.dog/3239c9f8261900ee0a360263c616c50d.png" />
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.15/vue.min.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="bg-cover w-full h-screen flex justify-center items-center"
+    style="background-image: url('https://w.wallhaven.cc/full/5g/wallhaven-5gppq5.jpg');">
+      <div class="rounded-3xl backdrop-blur-sm shadow-xl w-500px p-10px">
+        <el-form class="m-50px" ref="loginForm" :model="loginForm" :rules="loginRules">
+          <el-form-item >
+			  <span class="text-black text-lg w-70px">账号</span>
+            <el-input v-model="loginForm.userId" type="text" auto-complete="off" maxlength="20"></el-input>
+          </el-form-item>
+          <el-form-item >
+			  <span class="text-black text-lg w-70px">密码</span>
+            <el-input v-model="loginForm.password" type="password" maxlength="20"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleLogin()">登录</el-button>
+            <el-button @click="resetForm()">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          loginForm: {
+            userId: 'chen',
+            password: 'chen',
+          },
+        }
+      },
+      computed: {
+        loginRules() {
+          const validateUsername = (rule, value, callback) => {
+            if (value.length < 1) {
+              callback(new Error('请输入用户名'))
+            } else {
+              callback()
+            }
+          }
+          const validatePassword = (rule, value, callback) => {
+            if (value.length < 6) {
+              callback(new Error('密码必须在6位以上'))
+            } else {
+              callback()
+            }
+          }
+          return {
+            username: [{ validator: validateUsername, trigger: 'blur' }],
+            password: [{ validator: validatePassword, trigger: 'blur' }],
+          }
+        },
+      },
+      created() { },
+      mounted() { },
+      methods: {
+        async handleLogin() {
+			sessionStorage.setItem('firstIn', 'true');
+			
+          this.$refs.loginForm.validate(async (valid) => {
+            if (valid) {
+              let res = await axios({
+                url: 'http://localhost:8888/api/login',
+                method: 'post',
+                data: this.loginForm,
+              })
+              console.log('res-------->', res.data)
+              if (String(res.data.code) === '1') {
+                localStorage.setItem('userInfo', JSON.stringify(res.data))
+                window.location.href = '/home.html'
+              } else {
+                this.$message.error(res.data.msg)
+              }
+            }
+          })
+        },
+        async resetForm() {
+			this.loginForm.userId = ''
+			this.loginForm.password = ''
+      	}
+      },
+
+    })
+  </script>
+
+  <style>
+    html body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .el-form-item__content {
+	    display: flex;
+	    justify-content: space-around;
+	    align-items: center;
+	}
+  </style>
+</body>
+</html>

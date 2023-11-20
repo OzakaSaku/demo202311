@@ -3,8 +3,10 @@ package com.example;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
 
-@MapperScan("com.example.mapper") //设置mapper接⼝的扫描包
+@ServletComponentScan
 @SpringBootApplication
 public class Demo202311Application {
 
