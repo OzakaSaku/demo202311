@@ -81,7 +81,7 @@
                 data: this.loginForm,
               })
               console.log('res-------->', res.data)
-              if (String(res.data.code) === '1') {
+              if (String(res.data.code) === '0') {
                 localStorage.setItem('userInfo', JSON.stringify(res.data))
                 window.location.href = '/home.html'
               } else {

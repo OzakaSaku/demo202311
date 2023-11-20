@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset=" utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="renderer" content="webkit" />
+	<title>倉庫管理システム</title>
+	<link rel="shortcut icon" href="https://i.jpg.dog/3239c9f8261900ee0a360263c616c50d.png" />
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link href="//cdn.staticfile.org/layui/2.8.18/css/layui.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.15/vue.min.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+	<script src="//cdn.staticfile.org/layui/2.8.18/layui.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<div class="layui-logo layui-hide-xs layui-bg-black">倉庫管理システム</div>
+				<!-- 头部区域（可配合layui 已有的水平导航） -->
+				<ul class="layui-nav layui-layout-right">
+					<button lay-event="logout" class="layui-btn layui-btn-primary "
+						style="right: 7px;top: 11px;position: absolute;color: white;">退出登录</button>
+				</ul>
+			</div>
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">在庫商品情報</a>
+							<dl class="layui-nav-child">
+								<dd><a href="http://localhost:8888/home.html">在庫商品情報一覧</a></dd>
+								<dd><a href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a></dd>
+							</dl>
+						</li>
+					</ul>
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">入出庫情報</a>
+							<dl class="layui-nav-child">
+								<dd><a href="http://localhost:8888/stockIO.html">入出庫情報一覧</a></dd>
+								<dd class="layui-this"><a href="http://localhost:8888/stockIOAdd.html">入出庫情報登録</a></dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="layui-body">
+				<!-- 内容主体区域 -->
+				<div style="padding: 15px;">
+					<h1>入出庫情報登録</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+		<script>
+			 function dateHandle(dateTimeString) {
+
+				console.log(dateTimeString)
+
+				const date = new Date(dateTimeString);
+				const year = date.getFullYear();
+				const month = (date.getMonth() + 1).toString().padStart(2, '0');
+				const day = date.getDate().toString().padStart(2, '0');
+				const hours = date.getHours().toString().padStart(2, '0');
+				const minutes = date.getMinutes().toString().padStart(2, '0');
+				const seconds = date.getSeconds().toString().padStart(2, '0');
+
+				return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+			}
+			new Vue({
+				el: '#app',
+				data() {
+					return {
+						msg: '登录成功！',
+					}
+				},
+				computed: {},
+				created() { },
+				mounted() {
+					if (sessionStorage.getItem('firstIn') == 'true') {
+						this.hello()
+						sessionStorage.setItem('firstIn', 'false');
+					}
+				},
+				methods: {
+					async logout() {
+						let res = await axios({
+							url: 'http://localhost:8888/api/logout',
+							method: 'get',
+						})
+						console.log('res-------->', res)
+						if (String(res.data.code) === '1') {
+							localStorage.setItem('userInfo', '')
+							location.reload()
+						} else {
+							this.$message.error(res.data.msg)
+						}
+					},
+					hello() {
+						this.$message({
+							message: this.msg,
+							type: 'success'
+						})
+					},
+				},
+			})
+			layui.use(['table', 'dropdown'], function () {
+				var table = layui.table;
+				var dropdown = layui.dropdown;
+				var util = layui.util;
+				util.on('lay-event', {
+					logout: async function () {
+						console.log('logout....')
+						let res = await axios({
+							url: 'http://localhost:8888/api/logout',
+							method: 'get',
+						})
+						console.log('res-------->', res)
+						if (String(res.data.code) === '1') {
+							localStorage.setItem('userInfo', '')
+							location.reload()
+						} else {
+							this.$message.error(res.data.msg)
+						}
+
+					},
+				});
+			})
+		</script>
+		<style>
+			html body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+
+			.el-form-item__content {
+				display: flex;
+				justify-content: space-around;
+			}
+		</style>
+</body>
+
+</html>
