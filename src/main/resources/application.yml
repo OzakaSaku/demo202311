@@ -11,7 +11,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/demo202311?useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
-    password: root
+    password: 123456
     
 
 

@@ -40,7 +40,7 @@ public class LoginCheckFilter implements Filter {
         String[] urls = new String[]{
                 "/login",
                 "/logout",
-                "/api/**"
+                "/api/**",
         };
 
         //做调试用的
