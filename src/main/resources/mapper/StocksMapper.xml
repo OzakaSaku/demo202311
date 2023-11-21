@@ -30,15 +30,15 @@
 	<if test="mName != '' and mName != null">
 	and m.name = #{mName}
 	</if>
-	<if test="timeStart != '' and timeStart != null and timeEnd != '' and timeEnd != null">
+	<if test="createDateFrom != '' and createDateFrom != null and createDateTo != '' and createDateTo != null">
 	and date_format(create_date,'%Y%m%d') 
-	between date_format(#{timeStart},'%Y%m%d')
-	and date_format(#{timeEnd},'%Y%m%d')
+	between date_format(#{createDateFrom},'%Y%m%d')
+	and date_format(#{createDateTo},'%Y%m%d')
 	</if>
-	<if test="timeStart != '' and timeStart != null and timeEnd != '' and timeEnd != null">
+	<if test="updateDateFrom != '' and updateDateFrom != null and updateDateTo != '' and updateDateTo != null">
 	and date_format(update_date,'%Y%m%d') 
-	between date_format(#{timeStart},'%Y%m%d')
-	and date_format(#{timeEnd},'%Y%m%d')
+	between date_format(#{updateDateFrom},'%Y%m%d')
+	and date_format(#{updateDateTo},'%Y%m%d')
 	</if>
 	</where>
 	order by t.stock_id asc

@@ -15,9 +15,15 @@ public class StoReq {
 	private String tName;
 	private String mName;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date timeStart;
+	private Date createDateFrom;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date timeEnd;
+	private Date createDateTo;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date updateDateFrom;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date updateDateTo;
+	
+	
 	
 
 }
