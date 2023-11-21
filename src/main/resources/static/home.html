@@ -25,7 +25,7 @@
 				<!-- 头部区域（可配合layui 已有的水平导航） -->
 				<ul class="layui-nav layui-layout-right">
 					<button lay-event="logout" class="layui-btn layui-btn-primary "
-						style="right: 7px;top: 11px;position: absolute;color: white;">退出登录</button>
+						style="right: 7px;top: 11px;position: absolute;color: white;">ログアウト</button>
 				</ul>
 			</div>
 
@@ -84,6 +84,7 @@
 									class="layui-input demo-table-search-date">
 							</div>
 						</div>
+
 						<div class="layui-btn-container layui-col-xs12">
 							<button class="layui-btn" lay-submit lay-filter="demo-table-search">Search</button>
 							<button type="reset" class="layui-btn layui-btn-primary">Clear</button>
@@ -140,24 +141,9 @@
 
 		</div>
 		<script>
-
-			function dateHandle1(jsondate) {
-				if (jsondate != null) {
-					var date = new Date(parseInt(jsondate.replace("/Date(", "").replace(")/", ""), 10));
-					var year = date.getFullYear();
-					var month = date.getMonth() + 1;
-					var day = date.getDate();
-					var hh = date.getHours();
-					var mm = date.getMinutes();
-					var ss = date.getSeconds();
-					return year + "-" + month + "-" + day + " " + hh + ":" + mm + ":" + ss;
-				}
-			}
-
-
 			function dateHandle(dateTimeString) {
 
-				console.log(dateTimeString)
+				// console.log(dateTimeString)
 
 				const date = new Date(dateTimeString);
 				const year = date.getFullYear();
@@ -222,7 +208,7 @@
 							method: 'get',
 						})
 						console.log('res-------->', res)
-						if (String(res.data.code) === '1') {
+						if (String(res.data.code) === '0') {
 							localStorage.setItem('userInfo', '')
 							location.reload()
 						} else {

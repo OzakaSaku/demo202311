@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,7 @@ public class LoginController {
         
     }
 	
-	@RequestMapping("/api/login")
+	@PostMapping("/api/login")
     public R<User> login(HttpServletRequest request, @RequestBody User user) {
 		log.info("请求/api/login");
 		log.info(user.toString());
@@ -54,9 +55,9 @@ public class LoginController {
 		User u = userService.getById(userId);
         
 		if (u == null || !Objects.equals(userId, u.getUserId())) {
-			return R.error("用户名错误！");
+			return R.error("社員IDが間違っています。再度入力しなおしてください。");
 		}else if (!password.equals(u.getPassword())) {
-			return R.error("密码错误！");
+			return R.error("パスワードが間違っています。再度入力しなおしてください。");
 		}
 		
 		request.getSession().setAttribute("userId", user.getUserId());
@@ -69,7 +70,7 @@ public class LoginController {
 		request.getSession().setAttribute("userId", null);
 		
 		if (request.getSession().getAttribute("userId") == null) {
-			return R.ok();
+			return R.success("退出成功");
 		} else {
 			return R.error("退出失败");
 		}
