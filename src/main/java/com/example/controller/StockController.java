@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,5 +39,28 @@ public class StockController {
 	public R<Stock> delectSto(@RequestParam("idList") List<Integer> idList){
 		stockService.removeBatchByIds(idList);
 		return R.ok();
+	}
+
+	@RequestMapping("/api/stock/addSto")
+	@ResponseBody
+	public R<String> addSto(@RequestParam Stock stock){
+		//stock.setStockId(String.valueOf(UUID.randomUUID()));
+		try {
+			stockService.addSto(stock);
+			return R.ok();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@RequestMapping("api/stock/updateSto")
+	@ResponseBody
+	public R<String> updateSto(@RequestParam Stock stock){
+		try {
+			stockService.update(stock);
+			return R.ok();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

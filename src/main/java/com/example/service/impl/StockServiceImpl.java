@@ -27,4 +27,14 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
 		return list;
 	}
 
+	@Override
+	public void addSto(Stock stock) {
+		stockMapper.addStoList(stock);
+	}
+
+	@Override
+	public void update(Stock stock) {
+		stockMapper.updateSto(stock);
+	}
+
 }

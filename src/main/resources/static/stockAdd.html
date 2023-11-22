@@ -36,7 +36,8 @@
 							<dl class="layui-nav-child">
 								<dd><a href="http://localhost:8888/tStock.html">在庫商品情報一覧</a></dd>
 								<dd class="layui-this"><a
-										href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a></ddclass="layui-this">
+										href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a>
+									</dd>
 							</dl>
 						</li>
 					</ul>
@@ -55,20 +56,34 @@
 				<!-- 内容主体区域 -->
 				<div style="padding: 15px;">
 					<h1>在庫商品情報登録</h1>
+					<el-form ref="form" :model="form" label-width="80px">
+						<el-form-item label="在庫ID">
+							<el-input v-model="form.stockId"></el-input>
+						</el-form-item>
+						<el-form-item label="在庫名称">
+							<el-input v-model="form.name"></el-input>
+						</el-form-item>
+						<el-form-item label="単位">
+							<el-select v-model="form.unitId" placeholder="请选择活动区域">
+								<el-option label="個" value=1></el-option>
+								<el-option label="台" value=2></el-option>
+								<el-option label="本" value=3></el-option>
+								<el-option label="冊" value=4></el-option>
+								<el-option label="皿" value=5></el-option>
+								<el-option label="箱" value=6></el-option>
+								<el-option label="足" value=7></el-option>
+								<el-option label="件" value=8></el-option>
+							</el-select>
+						</el-form-item>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+						<el-form-item label="備考">
+							<el-input type="textarea" v-model="form.remarks"></el-input>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" @click="submitForm">登録</el-button>
+							<el-button>閉じる</el-button>
+						</el-form-item>
+					</el-form>
 				</div>
 			</div>
 		</div>
@@ -95,6 +110,12 @@
 				el: '#app',
 				data() {
 					return {
+						form: {
+							stockId: '',
+							name: '',
+							unitId: '',
+							remarks: '',
+						},
 						msg: '登录成功！',
 					}
 				},
@@ -107,6 +128,13 @@
 					}
 				},
 				methods: {
+					submitForm() {
+						axios({
+							url: 'http://localhost:8888/api/stock/updateSto',
+							method: 'post',
+							data: this.form,
+						})
+					},
 					async logout() {
 						let res = await axios({
 							url: 'http://localhost:8888/api/logout',
@@ -164,6 +192,6 @@
 				justify-content: space-around;
 			}
 		</style>
-</body>
+ </body>
 
 </html>

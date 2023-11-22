@@ -14,4 +14,8 @@ import com.example.vo.StocksVo;
 public interface StockService extends IService<Stock>  {
 	List<StocksVo> getList(StoReq stoReq);
 
+	void addSto(Stock stock);
+
+	void update(Stock stock);
+
 }
