@@ -46,9 +46,9 @@
                     <el-col :span="3">
                         <el-input v-model="stockInfo.stockName" placeholder="请输入内容"></el-input>
                     </el-col>
-                    <el-col :span="2" class="label unitName">単位名称</el-col>
+                    <el-col :span="2" class="label mName">単位名称</el-col>
                     <el-col :span="3">
-                        <el-select v-model="stockInfo.unitName" placeholder="请选择">
+                        <el-select v-model="stockInfo.mName" placeholder="请选择">
                             <el-option>個</el-option>
                             <el-option>台</el-option>
                             <el-option>本</el-option>
@@ -147,7 +147,8 @@
                 return {
                     stockInfo: {
                         stockName: '',
-                        unitName: '', updateDateFrom: '',
+                        mName: '',
+                        updateDateFrom: '',
                         updateDateTo: '',
                         createDateFrom: '',
                         createDateTo: '',
