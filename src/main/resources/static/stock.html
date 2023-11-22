@@ -272,7 +272,7 @@
                         method: 'post',
                     })
                     console.log('res-------->', res)
-                    this.tableData = res.data
+                    this.tableData = res.data.data
                 },
                 async toLogin() {
                     window.location.href = '/login.html'
@@ -289,10 +289,11 @@
                             cancelButtonText: 'いいえ',
                             type: 'warning'
                         }).then(() => {
+                        	let idList = this.multipleSelection.map(item => item.stockId)
                             axios({
                                 url: 'http://localhost:8888/api/stock/deleteSto',
-                                data: this.multipleSelection,
-                                method: 'get',
+                                data: idList,
+                                method: 'post',
                             })
                             this.$message({
                                 type: 'success',
@@ -330,10 +331,11 @@
                         cancelButtonText: 'いいえ',
                         type: 'warning'
                     }).then(() => {
+                    	let idList = [id]
                         axios({
                             url: 'http://localhost:8888/api/stock/deleteSto',
-                            data: id,
-                            method: 'get',
+                            data: idList,
+                            method: 'post',
                         }).then(function () {
                             this.$message({
                                 type: 'success',

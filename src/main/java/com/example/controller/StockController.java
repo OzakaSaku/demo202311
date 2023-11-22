@@ -35,7 +35,7 @@ public class StockController {
 	
 	@RequestMapping("/api/stock/deleteSto")
 	@ResponseBody
-	public R<Stock> delectSto(@RequestParam("idList") List<Integer> idList){
+	public R<Stock> delectSto(@RequestParam("idList") List<String> idList){
 		stockService.removeBatchByIds(idList);
 		return R.ok();
 	}
