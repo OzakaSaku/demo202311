@@ -83,9 +83,7 @@
               })
               console.log('res-------->', res.data)
               if (String(res.data.code) === '0') {
-                localStorage.setItem('userInfo', JSON.stringify(res.data))
-                window.location.href = '/home.html'
-                // window.open('/home.html', '_blank');
+                window.location.href = '/stock.html'
               } else {
                 this.$message.error(res.data.msg)
               }
@@ -93,8 +91,7 @@
           })
         },
         async resetForm() {
-			this.loginForm.userId = ''
-			this.loginForm.password = ''
+			window.close();
       	}
       },
 

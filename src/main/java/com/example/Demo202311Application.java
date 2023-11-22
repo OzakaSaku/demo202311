@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @ServletComponentScan
 @SpringBootApplication
+@MapperScan("com.example.mapper")
 public class Demo202311Application {
 
 	public static void main(String[] args) {

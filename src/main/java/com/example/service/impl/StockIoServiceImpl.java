@@ -1,5 +1,7 @@
 package com.example.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,12 @@ public class StockIoServiceImpl extends ServiceImpl<StockIoMapper, StockIo> impl
 		
 		return stockIoMapper.insert(stockIo);
 	}
+	
+    @Override
+    public List<StockIo> selectList(StockIo stockIo) {
+
+        return stockIoMapper.selectList(stockIo);
+    }
 	
 	
 }

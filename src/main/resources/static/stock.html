@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset=" utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="renderer" content="webkit" />
+	<title>倉庫管理システム</title>
+	<link rel="shortcut icon" href="https://i.jpg.dog/3239c9f8261900ee0a360263c616c50d.png" />
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link href="//cdn.staticfile.org/layui/2.8.18/css/layui.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.15/vue.min.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+	<script src="//cdn.staticfile.org/layui/2.8.18/layui.js"></script>
+	<style>
+		 .titleRow {
+            margin-top: 2%;
+        }
+
+        .label {
+            text-align: center;
+            line-height: 44px;
+        }
+
+        .unitName {
+            margin-left: 3%;
+        }
+
+        .queryAndCloseButton {
+            margin-left: 10%;
+        }
+
+        .symbol {
+            margin-left: -3%;
+            margin-right: -1%;
+        }
+	</style>
+</head>
+
+<body>
+	<div id="app">
+
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<div class="layui-logo layui-hide-xs layui-bg-black">倉庫管理システム</div>
+				<!-- 头部区域（可配合layui 已有的水平导航） -->
+
+			</div>
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">在庫商品情報</a>
+							<dl class="layui-nav-child">
+								<dd class="layui-this"><a href="http://localhost:8888/stock.html">在庫商品情報一覧</a></dd>
+								<dd><a href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a></dd>
+							</dl>
+						</li>
+					</ul>
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">入出庫情報</a>
+							<dl class="layui-nav-child">
+								<dd><a href="http://localhost:8888/stockIO.html">入出庫情報一覧</a></dd>
+								<dd><a href="http://localhost:8888/stockIOAdd.html">入出庫情報登録</a></dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="layui-body">
+				<!-- 内容主体区域 -->
+				<div style="padding: 15px;">
+
+
+
+					<el-container>
+						<el-header>
+							<el-row class="titleRow">
+								<el-col :span="2" class="label">在庫名称</el-col>
+								<el-col :span="3">
+									<el-input v-model="stockInfo.stockName" placeholder="请输入内容"></el-input>
+								</el-col>
+								<el-col :span="2" class="label mName">単位名称</el-col>
+								<el-col :span="3">
+									<el-select v-model="stockInfo.mName" placeholder="请选择">
+										<el-option>個</el-option>
+										<el-option>台</el-option>
+										<el-option>本</el-option>
+										<el-option>冊</el-option>
+										<el-option>皿</el-option>
+										<el-option>箱</el-option>
+										<el-option>足</el-option>
+										<el-option>件</el-option>
+									</el-select>
+								</el-col>
+
+								<el-col :span="4" class="queryAndCloseButton">
+									<el-button plain @click="stockInfoGet()">検索</el-button>
+									<el-button plain @click="toLogin()">閉じる</el-button>
+								</el-col>
+							</el-row>
+							<el-row class="titleRow">
+								<el-col class="label" :span="2">更新日時</el-col>
+								<el-col :span="4">
+									<el-date-picker v-model="stockInfo.updateDateFrom" type="date"
+										value-format="yyyy/MM/dd" placeholder="选择开始日期">
+									</el-date-picker>
+								</el-col>
+								<el-col :span="1" class="label symbol">
+									～
+								</el-col>
+
+								<el-col :span="4">
+									<el-date-picker v-model="stockInfo.updateDateTo" type="date"
+										value-format="yyyy/MM/dd" placeholder="选择结束日期">
+									</el-date-picker>
+								</el-col>
+
+								<el-col class="label" :span="2">作成日時</el-col>
+								<el-col :span="4">
+									<el-date-picker v-model="stockInfo.createDateFrom" type="date"
+										value-format="yyyy/MM/dd" placeholder="选择开始日期">
+									</el-date-picker>
+								</el-col>
+								<el-col :span="1" class="label symbol">
+									～
+								</el-col>
+
+								<el-col :span="4">
+									<el-date-picker v-model="stockInfo.createDateTo" type="date"
+										value-format="yyyy/MM/dd" placeholder="选择结束日期">
+									</el-date-picker>
+								</el-col>
+							</el-row>
+							<el-row class="titleRow">
+								<el-col :span="4" style="margin-left: 2%;">
+									<el-button plain @click="stockAdd()">追加</el-button>
+									<el-button plain @click="stocksDel()">削除</el-button>
+								</el-col>
+							</el-row>
+						</el-header>
+						<el-main style="margin-top: 11%;">
+							<el-table :data="tableData" border style="width: 100%;height: 500px ;overflow:auto;" stripe
+								@selection-change="handleSelectionChange">
+								<el-table-column type="selection" width="55" fixed="">
+								</el-table-column>
+								<el-table-column prop="stockId" label="在庫商品ID" width="100">
+								</el-table-column>
+								<el-table-column prop="name" label="在庫商品名称">
+								</el-table-column>
+								<el-table-column prop="mName" label="単位名称">
+								</el-table-column>
+								<el-table-column prop="stockNum" label="在庫数量" width="100">
+								</el-table-column>
+								<el-table-column prop="updateUser" label="更新者">
+								</el-table-column>
+								<el-table-column prop="updateDate" label="更新日時">
+								</el-table-column>
+								<el-table-column prop="createUser" label="作成者">
+								</el-table-column>
+								<el-table-column prop="createDate" label="作成日時">
+								</el-table-column>
+								<el-table-column prop="remarks" label="備考">
+								</el-table-column>
+								<el-table-column label="操作">
+									<template slot-scope="scope">
+										<el-button @click="stockUpdate(scope.row.id)" type="text"
+											size="small">編集</el-button>
+										<el-button type="text" size="small"
+											@click="stockDel(scope.row.id)">削除</el-button>
+										<el-button type="text" size="small" @click="toStockIo()">入出庫</el-button>
+									</template>
+								</el-table-column>
+							</el-table>
+						</el-main>
+					</el-container>
+
+
+
+
+
+
+				</div>
+			</div>
+
+
+		</div>
+		<script>
+			function dateHandle(dateTimeString) {
+
+				// console.log(dateTimeString)
+
+				const date = new Date(dateTimeString);
+				const year = date.getFullYear();
+				const month = (date.getMonth() + 1).toString().padStart(2, '0');
+				const day = date.getDate().toString().padStart(2, '0');
+				const hours = date.getHours().toString().padStart(2, '0');
+				const minutes = date.getMinutes().toString().padStart(2, '0');
+				const seconds = date.getSeconds().toString().padStart(2, '0');
+
+				return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+			}
+
+			new Vue({
+				el: '#app',
+				data() {
+					return {
+						stockInfo: {
+							name: '',
+							mName: '',
+							updateDateFrom: '',
+							updateDateTo: '',
+							createDateFrom: '',
+							createDateTo: '',
+						},
+
+						units: [],
+
+						multipleSelection: [],
+						tableData: [{
+							date: '2016-05-02',
+							id: '1',
+							name: '1商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '2',
+							name: '2商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '3',
+							name: '3商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '4',
+							name: '4商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '5',
+							name: '5商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '6',
+							name: '6商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '7',
+							name: '7商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '8',
+							name: '8商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}, {
+							date: '2016-05-02',
+							id: '9',
+							name: '9商品',
+							unitId: 'A单位',
+							stockNum: 35,
+							updateUser: 'zs',
+							updateDate: '2012/08/30',
+							createUser: 'zs',
+							createDate: '2012/10/26',
+							remarks: '无'
+						}]
+					}
+				},
+				computed: {},
+				created() {
+				},
+				mounted() {
+					this.stockInfoGet()
+				},
+				methods: {
+					async stockInfoGet() {
+						let res = await axios({
+							url: 'http://localhost:8888/api/stock/list',
+							method: 'post',
+						})
+						console.log('res-------->', res)
+
+						//res.data.data.foreach(i => {
+							//i.updateDate = dateHandle(i.updateDate)
+							//i.createDate = dateHandle(i.createDate)
+						//})
+
+						this.tableData = res.data.data
+					},
+					async toLogin() {
+						window.location.href = '/login.html'
+					},
+					async stockAdd() {
+						window.location.href = '/'
+					},
+					async stocksDel() {
+						if (this.multipleSelection.length <= 0) {
+							this.$message('少なくとも1つの削除を選択してください');
+						} else {
+							this.$confirm('この操作はファイルを永久に削除します。続行するかどうか?', 'ヒント', {
+								confirmButtonText: 'はい',
+								cancelButtonText: 'いいえ',
+								type: 'warning'
+							}).then(() => {
+								let idList = this.multipleSelection.map(item => item.stockId)
+								axios({
+									url: 'http://localhost:8888/api/stock/deleteSto',
+									data: idList,
+									method: 'post',
+								})
+								this.$message({
+									type: 'success',
+									message: '削除に成功しました!'
+								});
+								this.stockInfoGet()
+							}).catch(() => {
+								this.$message({
+									type: 'info',
+									message: '削除がキャンセルされました'
+								});
+							});
+
+						}
+					},
+					async retrieval() {
+						let res = await axios({
+							url: 'http://localhost:8888/',
+							data: this.stockInfo,
+							method: 'post',
+						})
+						this.tableData = res.data
+					},
+					async stockUpdate(id) {
+						let res = await axios({
+							url: 'http://localhost:8888/',
+							data: id,
+							method: 'get',
+						})
+						window.location.href = '/'
+					},
+					async stockDel(id) {
+						this.$confirm('この操作はファイルを永久に削除します。続行するかどうか?', 'ヒント', {
+							confirmButtonText: 'はい',
+							cancelButtonText: 'いいえ',
+							type: 'warning'
+						}).then(() => {
+							let idList = [id]
+							axios({
+								url: 'http://localhost:8888/api/stock/deleteSto',
+								data: idList,
+								method: 'post',
+							}).then(function () {
+								this.$message({
+									type: 'success',
+									message: '削除に成功しました!'
+								})
+								this.stockInfoGet();
+							})
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '削除がキャンセルされました'
+							});
+						});
+
+					},
+					async toStockIo() {
+						window.location.href = '/'
+					},
+					handleSelectionChange(val) {
+						this.multipleSelection = val;
+					},
+					test() {
+						console.log(this.stockInfo)
+					}
+				},
+			})
+		</script>
+
+		<style>
+			html body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+
+			.el-form-item__content {
+				display: flex;
+				justify-content: space-around;
+			}
+		</style>
+
+</body>
+
+</html>

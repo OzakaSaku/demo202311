@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,5 +15,7 @@ public interface StockIoService extends IService<StockIo>  {
 	StockIoAddDTO getStockIoById(String id);
 	
 	int insertStockIo(StockIo stockIo);
+	
+	List<StockIo> selectList(StockIo stockIo);
 	
 }

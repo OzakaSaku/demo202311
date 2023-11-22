@@ -1,5 +1,7 @@
 package com.example.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,10 +22,8 @@ public interface StockIoMapper extends BaseMapper<StockIo> {
             "WHERE t_stock_io.id = #{id}" +
     		"LIMIT 1")
     StockIoAddDTO selectStockIo(String id);
-	
-//    @Insert("INSERT INTO t_stock_io (id, in_out_no, io_type, io_num, remarks, del_flg, create_date, create_user, update_date, update_user, version) " +
-//            "VALUES (#{id}, #{inOutNo}, #{ioType}, #{ioNum}, #{remarks}, #{delFlg}, #{createDate}, #{createUser}, #{updateDate}, #{updateUser}, #{version})")
-//    int insertStockIo(StockIo stockIo);
+
     
+    List<StockIo> selectList(StockIo stockIo);
     
 }

@@ -34,7 +34,7 @@
 						<li class="layui-nav-item layui-nav-itemed">
 							<a class="" href="javascript:;">在庫商品情報</a>
 							<dl class="layui-nav-child">
-								<dd><a href="http://localhost:8888/home.html">在庫商品情報一覧</a></dd>
+								<dd><a href="http://localhost:8888/stock.html">在庫商品情報一覧</a></dd>
 								<dd><a href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a></dd>
 							</dl>
 						</li>
@@ -153,8 +153,6 @@
 						msg: '登录成功！',
 					}
 				},
-				computed: {},
-				created() { },
 				mounted() {
 					if (sessionStorage.getItem('firstIn') == 'true') {
 						this.hello()
@@ -190,19 +188,6 @@
 								}
 
 							})
-						}
-					},
-					async logout() {
-						let res = await axios({
-							url: 'http://localhost:8888/api/logout',
-							method: 'get',
-						})
-						console.log('res-------->', res)
-						if (String(res.data.code) === '1') {
-							localStorage.setItem('userInfo', '')
-							location.reload()
-						} else {
-							this.$message.error(res.data.msg)
 						}
 					},
 					hello() {

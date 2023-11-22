@@ -21,7 +21,7 @@ public class User {
 	
     private String password;
 	
-    private String delFlg;
+    private int delFlg;
     
     private String createDate;
     

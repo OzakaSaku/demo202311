@@ -21,11 +21,7 @@
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-header">
 				<div class="layui-logo layui-hide-xs layui-bg-black">倉庫管理システム</div>
-				<!-- 头部区域（可配合layui 已有的水平导航） -->
-				<ul class="layui-nav layui-layout-right">
-					<button lay-event="logout" class="layui-btn layui-btn-primary "
-						style="right: 7px;top: 11px;position: absolute;color: white;">退出登录</button>
-				</ul>
+
 			</div>
 			<div class="layui-side layui-bg-black">
 				<div class="layui-side-scroll">
@@ -34,7 +30,7 @@
 						<li class="layui-nav-item layui-nav-itemed">
 							<a class="" href="javascript:;">在庫商品情報</a>
 							<dl class="layui-nav-child">
-								<dd><a href="http://localhost:8888/home.html">在庫商品情報一覧</a></dd>
+								<dd><a href="http://localhost:8888/stock.html">在庫商品情報一覧</a></dd>
 								<dd class="layui-this"><a
 										href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a></ddclass="layui-this">
 							</dl>
@@ -54,15 +50,37 @@
 			<div class="layui-body">
 				<!-- 内容主体区域 -->
 				<div style="padding: 15px;">
-					<h1>在庫商品情報登録</h1>
 
 
 
+					<el-form ref="form" :model="form" label-width="80px">
+						<el-form-item label="在庫ID">
+							<el-input v-model="form.stockId"></el-input>
+						</el-form-item>
+						<el-form-item label="在庫名称">
+							<el-input v-model="form.name"></el-input>
+						</el-form-item>
+						<el-form-item label="単位">
+							<el-select v-model="form.unitId" placeholder="请选择活动区域">
+								<el-option label="個" value=1></el-option>
+								<el-option label="台" value=2></el-option>
+								<el-option label="本" value=3></el-option>
+								<el-option label="冊" value=4></el-option>
+								<el-option label="皿" value=5></el-option>
+								<el-option label="箱" value=6></el-option>
+								<el-option label="足" value=7></el-option>
+								<el-option label="件" value=8></el-option>
+							</el-select>
+						</el-form-item>
 
-
-
-
-
+						<el-form-item label="備考">
+							<el-input type="textarea" v-model="form.remarks"></el-input>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" @click="submitForm">登録</el-button>
+							<el-button>閉じる</el-button>
+						</el-form-item>
+					</el-form>
 
 
 
@@ -95,11 +113,14 @@
 				el: '#app',
 				data() {
 					return {
-						msg: '登录成功！',
+						form: {
+							stockId: '',
+							name: '',
+							unitId: '',
+							remarks: '',
+						},
 					}
 				},
-				computed: {},
-				created() { },
 				mounted() {
 					if (sessionStorage.getItem('firstIn') == 'true') {
 						this.hello()
@@ -107,23 +128,11 @@
 					}
 				},
 				methods: {
-					async logout() {
-						let res = await axios({
-							url: 'http://localhost:8888/api/logout',
-							method: 'get',
-						})
-						console.log('res-------->', res)
-						if (String(res.data.code) === '1') {
-							localStorage.setItem('userInfo', '')
-							location.reload()
-						} else {
-							this.$message.error(res.data.msg)
-						}
-					},
-					hello() {
-						this.$message({
-							message: this.msg,
-							type: 'success'
+					submitForm() {
+						axios({
+							url: 'http://localhost:8888/api/stock/updateSto',
+							method: 'post',
+							data: this.form,
 						})
 					},
 				},
@@ -141,8 +150,7 @@
 							method: 'get',
 						})
 						console.log('res-------->', res)
-						if (String(res.data.code) === '1') {
-							localStorage.setItem('userInfo', '')
+						if (String(res.data.code) === '0') {
 							location.reload()
 						} else {
 							this.$message.error(res.data.msg)

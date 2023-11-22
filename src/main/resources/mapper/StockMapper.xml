@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.StockMapper">
+<resultMap id="StocksMap" type="com.example.entity.StocksVo">
+    <id column="stock_id" property="stockId"/>
+    <result column="name" property="name"/>
+    <result column="unit_id" property="unitId"/>
+    <result column="m_name" property="mName"/>
+    <result column="stock_num" property="stockNum"/>
+    <result column="remarks" property="remarks"/>
+    <result column="del_flg" property="delFlg"/>
+    <result column="create_date" property="createDate"/>
+    <result column="create_user" property="createUser"/>
+    <result column="update_date" property="updateDate"/>
+    <result column="update_user" property="updateUser"/>
+</resultMap>
+
+	<select id="getStoList" resultType="com.example.entity.StocksVo" resultMap="StocksMap">
+	select t.stock_id,t.name,m.name as m_name,m.unit_id,t.stock_num,t.unit_id,t.create_date,t.create_user,t.update_date,t.update_user,t.remarks,t.del_flg
+	from t_stock t
+	left join m_unit m
+	on t.unit_id = m.unit_id
+	<where>
+	t.del_flg = 0
+	<if test="name != '' and name != null">
+	and t.name like concat('%',#{name},'%')
+	</if>
+	<if test="mName != '' and mName != null">
+	and m.name = #{mName}
+	</if>
+	<if test="createDateFrom != '' and createDateFrom != null and createDateTo != '' and createDateTo != null">
+	and date_format(create_date,'%Y%m%d') 
+	between date_format(#{createDateFrom},'%Y%m%d')
+	and date_format(#{createDateTo},'%Y%m%d')
+	</if>
+	<if test="updateDateFrom != '' and updateDateFrom != null and updateDateTo != '' and updateDateTo != null">
+	and date_format(update_date,'%Y%m%d') 
+	between date_format(#{updateDateFrom},'%Y%m%d')
+	and date_format(#{updateDateTo},'%Y%m%d')
+	</if>
+	</where>
+	order by t.stock_id asc
+	</select>
+	
+
+</mapper>

@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("m_code")
-public class Code {
+public class MCode {
 	@TableId
-    private Integer codeId;
+    private int codeId;
     private String name;
-    private Integer delFlg;
+    private int delFlg;
     private Date createDate;
     private String createUser;
     private Date updateDate;
     private String updateUser;
-    private Integer version;
+    private int version;
 }

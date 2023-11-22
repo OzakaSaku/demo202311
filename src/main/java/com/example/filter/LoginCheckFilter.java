@@ -57,7 +57,7 @@ public class LoginCheckFilter implements Filter {
         }
         
         if (requestURL.contains("login.html") && request.getSession().getAttribute("userId") != null) {
-        	response.sendRedirect(request.getContextPath() + "/home.html");
+        	response.sendRedirect(request.getContextPath() + "/stock.html");
         	return;
 		}
         

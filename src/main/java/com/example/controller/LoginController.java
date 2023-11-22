@@ -34,14 +34,15 @@ public class LoginController {
 	@RequestMapping({"/" })
     public void index(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		log.info("重定向到登录");
+		log.info("重定向到/login.html");
 		
 		if (request.getSession().getAttribute("userId") == null) {
 			response.sendRedirect(request.getContextPath() + "/login.html");
 		} else {
-			response.sendRedirect(request.getContextPath() + "/home.html");
+			log.info("重定向到/stock.html");
+			
+			response.sendRedirect(request.getContextPath() + "/stock.html");
 		}
-        
     }
 	
 	@PostMapping("/api/login")
@@ -54,12 +55,11 @@ public class LoginController {
 		
 		User u = userService.getById(userId);
         
-		if (u == null || !Objects.equals(userId, u.getUserId())) {
+		if ( u == null || u.getDelFlg() == 1 || !Objects.equals(userId, u.getUserId())) {
 			return R.error("社員IDが間違っています。再度入力しなおしてください。");
 		}else if (!password.equals(u.getPassword())) {
 			return R.error("パスワードが間違っています。再度入力しなおしてください。");
 		}
-		
 		request.getSession().setAttribute("userId", user.getUserId());
 		return R.success(user);
     }
@@ -75,12 +75,6 @@ public class LoginController {
 			return R.error("退出失败");
 		}
     }
-	
-	@RequestMapping("/index")
-	public String index(Model model, String username) {
-		model.addAttribute("msg", "welcome you!" + username);
-		return "index";
-	}
 
 
 }

@@ -28,6 +28,19 @@ public class StockIoController {
 	@Autowired
 	private StockIoService stockIoService;
 	
+	
+	
+    @GetMapping("/list")
+    public R<List<StockIo>> selectList(StockIo stockIo ){
+
+        List<StockIo> stockIoList = stockIoService.selectList(stockIo);
+
+        return R.success(stockIoList);
+    }
+	
+	
+	
+	
 	@Autowired
 	private StockService stockService;
 	
@@ -44,9 +57,6 @@ public class StockIoController {
 	@PostMapping({"/api/stockio" })
     public R<String> insertStockIo(@RequestBody StockIo stockIo) {
 		
-		
-		
-		
 		QueryWrapper<StockIo> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("id", stockIo.getId());
 		
@@ -57,15 +67,6 @@ public class StockIoController {
 		log.info(inout.toString());
 		
 		stockIo.setInOutNo(inoutInteger);
-//		stockIo.setDelFlg(0);
-		
-//		if (inoutInteger == 0) {
-//			stockIo.setCreateDate(new Date());
-//			stockIo.setUpdateDate(new Date());
-//		} else {
-//			stockIo.setUpdateDate(new Date());
-//		}
-		
 		log.info(stockIo.toString());
 		Integer success = stockIoService.insertStockIo(stockIo);
 		log.info(success.toString());
