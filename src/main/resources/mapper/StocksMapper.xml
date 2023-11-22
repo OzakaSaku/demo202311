@@ -5,7 +5,7 @@
 <mapper namespace="com.example.mapper.StockMapper">
 <resultMap id="StocksMap" type="com.example.vo.StocksVo">
     <id column="stock_id" property="stockId"/>
-    <result column="name" property="tName"/>
+    <result column="name" property="name"/>
     <result column="unit_id" property="unitId"/>
     <result column="name" property="mName"/>
     <result column="stock_num" property="stockNum"/>
@@ -24,8 +24,8 @@
 	on t.unit_id = m.unit_id
 	<where>
 	t.del_flg = 0
-	<if test="tName != '' and tName != null">
-	and t.name like concat('%',#{tName},'%')
+	<if test="name != '' and name != null">
+	and t.name like concat('%',#{name},'%')
 	</if>
 	<if test="mName != '' and mName != null">
 	and m.name = #{mName}

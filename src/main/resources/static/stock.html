@@ -110,11 +110,11 @@
                     @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="55" fixed="">
                     </el-table-column>
-                    <el-table-column prop="id" label="在庫商品ID" width="100">
+                    <el-table-column prop="stockId" label="在庫商品ID" width="100">
                     </el-table-column>
                     <el-table-column prop="name" label="在庫商品名称">
                     </el-table-column>
-                    <el-table-column prop="unitId" label="単位名称">
+                    <el-table-column prop="mName" label="単位名称">
                     </el-table-column>
                     <el-table-column prop="stockNum" label="在庫数量" width="100">
                     </el-table-column>
@@ -146,7 +146,7 @@
             data() {
                 return {
                     stockInfo: {
-                        stockName: '',
+                    	name: '',
                         mName: '',
                         updateDateFrom: '',
                         updateDateTo: '',

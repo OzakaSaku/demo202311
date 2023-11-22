@@ -17,7 +17,7 @@ public class  StocksVo {
 	 */
 	private int delFlg;
 	private String stockId;
-	private String tName;
+	private String name;
 	private int unitId;
 	private String mName;
 	private int stockNum;
