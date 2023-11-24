@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.StockIoMapper">
+<!--    动态查询 Mybatis中的sql语句中的“<”和“>”号要用转义字符“&lt;”和”&gt;“，否则会报错！-->
+  <!--  <select id="selectList" resultMap="stockIoResult">
+        SELECT
+
+        m.name ,
+        tsi.io_num,
+        tsi.update_date ,
+        tsi.update_user ,
+        tsi.remarks
+        FROM
+        t_stock_io tsi
+        LEFT JOIN
+        m_code m
+        ON
+        tsi.io_type = m.code_id
+
+         WHERE tsi.id = #{id}
+        <if test="codeId != 0">
+            AND
+            m.code_id = #{codeId}
+        </if>
+
+        <if test="updateDateFrom != '' and updateDateFrom != null and updateDateTo != '' and updateDateTo != null">
+            and date_format(update_date,'%Y%m%d')
+            between date_format(#{updateDateFrom},'%Y%m%d')
+            and date_format(#{updateDateTo},'%Y%m%d')
+        </if>
+        
+    </select>
+
+    <resultMap id="stockIoResult" type="StockIoDTO">
+        <id column="id" property="id" />
+        <result column="name" property="name"/>
+        <result column="io_num" property="ioNum"/>
+        <result column="remarks" property="remarks"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+-->
+</mapper>

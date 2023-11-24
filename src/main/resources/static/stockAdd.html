@@ -21,20 +21,16 @@
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-header">
 				<div class="layui-logo layui-hide-xs layui-bg-black">倉庫管理システム</div>
-				<!-- 头部区域（可配合layui 已有的水平导航） -->
-				<ul class="layui-nav layui-layout-right">
-					<button lay-event="logout" class="layui-btn layui-btn-primary "
-						style="right: 7px;top: 11px;position: absolute;color: white;">退出登录</button>
-				</ul>
+
 			</div>
 			<div class="layui-side layui-bg-black">
 				<div class="layui-side-scroll">
 					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 					<ul class="layui-nav layui-nav-tree" lay-filter="test">
 						<li class="layui-nav-item layui-nav-itemed">
-							<a class="" href="http://localhost:8888/tStock.html">在庫商品情報</a>
+							<a class="" href="javascript:;">在庫商品情報</a>
 							<dl class="layui-nav-child">
-								<dd><a href="http://localhost:8888/tStock.html">在庫商品情報一覧</a></dd>
+								<dd><a href="http://localhost:8888/stock.html">在庫商品情報一覧</a></dd>
 								<dd class="layui-this"><a
 										href="http://localhost:8888/stockAdd.html">在庫商品情報登録</a>
 									</dd>
@@ -55,7 +51,7 @@
 			<div class="layui-body">
 				<!-- 内容主体区域 -->
 				<div style="padding: 15px;">
-					<h1>在庫商品情報登録</h1>
+
 					<el-form ref="form" :model="form" label-width="80px">
 						<el-form-item label="在庫ID">
 							<el-input v-model="form.stockId"></el-input>
@@ -84,6 +80,7 @@
 							<el-button>閉じる</el-button>
 						</el-form-item>
 					</el-form>
+
 				</div>
 			</div>
 		</div>
@@ -116,11 +113,8 @@
 							unitId: '',
 							remarks: '',
 						},
-						msg: '登录成功！',
 					}
 				},
-				computed: {},
-				created() { },
 				mounted() {
 					if (sessionStorage.getItem('firstIn') == 'true') {
 						this.hello()
@@ -133,25 +127,6 @@
 							url: 'http://localhost:8888/api/stock/updateSto',
 							method: 'post',
 							data: this.form,
-						})
-					},
-					async logout() {
-						let res = await axios({
-							url: 'http://localhost:8888/api/logout',
-							method: 'get',
-						})
-						console.log('res-------->', res)
-						if (String(res.data.code) === '1') {
-							localStorage.setItem('userInfo', '')
-							location.reload()
-						} else {
-							this.$message.error(res.data.msg)
-						}
-					},
-					hello() {
-						this.$message({
-							message: this.msg,
-							type: 'success'
 						})
 					},
 				},
@@ -169,8 +144,7 @@
 							method: 'get',
 						})
 						console.log('res-------->', res)
-						if (String(res.data.code) === '1') {
-							localStorage.setItem('userInfo', '')
+						if (String(res.data.code) === '0') {
 							location.reload()
 						} else {
 							this.$message.error(res.data.msg)

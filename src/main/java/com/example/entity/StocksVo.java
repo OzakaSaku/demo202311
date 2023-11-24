@@ -1,23 +1,19 @@
-package com.example.vo;
+package com.example.entity;
 
-import java.sql.Date;
-
-
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
 @Data
-
-public class  StocksVo {
-	
+public class StocksVo {
 	/**
 	 * 逻辑删除： 0：显示  1：隐藏
 	 */
 	private int delFlg;
 	private String stockId;
-	private String tName;
+	private String name;
 	private int unitId;
 	private String mName;
 	private int stockNum;
@@ -29,7 +25,4 @@ public class  StocksVo {
 	private Date updateDate;
 	private String updateUser;
 	private int version;
-	
-	
-
 }

@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.common.R;
+import com.example.entity.StoReq;
 import com.example.entity.Stock;
+<<<<<<< HEAD
 import com.example.req.StoReq;
+=======
+import com.example.entity.StocksVo;
+>>>>>>> chen
 import com.example.service.StockService;
 import com.example.vo.StocksVo;
 
@@ -26,8 +31,7 @@ public class StockController {
 	private StockService stockService;
 	
 	@RequestMapping({"/api/stock/list" })
-    public R<List<StocksVo>> index(StoReq stoReq ) {
-
+    public R<List<StocksVo>> getAllStocks(StoReq stoReq) {
 		log.info("请求/api/stock/list");
 		List<StocksVo> stocks = stockService.getList(stoReq); 
 		
@@ -36,7 +40,7 @@ public class StockController {
 	
 	@RequestMapping("/api/stock/deleteSto")
 	@ResponseBody
-	public R<Stock> delectSto(@RequestParam("idList") List<Integer> idList){
+	public R<Stock> delectSto(@RequestParam("idList") List<String> idList){
 		stockService.removeBatchByIds(idList);
 		return R.ok();
 	}
@@ -63,4 +67,5 @@ public class StockController {
 			throw new RuntimeException(e);
 		}
 	}
+
 }

@@ -2,16 +2,15 @@ package com.example.service.impl;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.entity.StoReq;
 import com.example.entity.Stock;
+import com.example.entity.StocksVo;
 import com.example.mapper.StockMapper;
-import com.example.req.StoReq;
 import com.example.service.StockService;
-import com.example.vo.StocksVo;
 
 @Service
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements StockService {
@@ -37,4 +36,5 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
 		stockMapper.updateSto(stock);
 	}
 
+	
 }

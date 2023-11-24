@@ -18,7 +18,7 @@ public class R<T> {
 
     public static <T> R<T> ok() {
         R<T> r = new R<T>();
-        r.code = 1;
+        r.code = 0;
         return r;
     }
     

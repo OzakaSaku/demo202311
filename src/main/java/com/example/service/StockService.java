@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.StoReq;
 import com.example.entity.Stock;
-import com.example.req.StoReq;
-import com.example.vo.StocksVo;
-
+import com.example.entity.StocksVo;
 
 @Service
 public interface StockService extends IService<Stock>  {
@@ -17,5 +16,4 @@ public interface StockService extends IService<Stock>  {
 	void addSto(Stock stock);
 
 	void update(Stock stock);
-
 }
