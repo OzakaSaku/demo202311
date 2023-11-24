@@ -154,13 +154,7 @@
 					}
 				},
 				mounted() {
-					if (sessionStorage.getItem('firstIn') == 'true') {
-						this.hello()
-						sessionStorage.setItem('firstIn', 'false');
-					}
-					console.log('mounted')
 
-					this.init()
 				},
 				methods: {
 					async init() {
@@ -189,12 +183,6 @@
 
 							})
 						}
-					},
-					hello() {
-						this.$message({
-							message: this.msg,
-							type: 'success'
-						})
 					},
 				},
 			})
