@@ -71,8 +71,8 @@ public class StockIoController {
 		Integer success = stockIoService.insertStockIo(stockIo);
 		log.info(success.toString());
 		
-		if (success > 0) {
-			
+		if (success != 0) {
+			log.info("修改库存。。。");
 			Stock sss = stockService.getById(stockIo.getId());
 			
 			log.info("sss.getStockNum()--->" + sss.getStockNum());

@@ -110,15 +110,12 @@
 						</div>
 
 						<div class="layui-form-item">
-							<button class="layui-btn " lay-submit
-								lay-filter="demo2">登録</button>
+							<button class="layui-btn " lay-submit lay-filter="demo2">登録</button>
 						</div>
 					</form>
-					
-					<button lay-event="backTo"
-						class="layui-btn layui-btn-primary "
-						style="top: -53px; left: 99px;position: relative;"
-						>閉じる</button>
+
+					<button lay-event="backTo" class="layui-btn layui-btn-primary "
+						style="top: -53px; left: 99px;position: relative;">閉じる</button>
 
 				</div>
 			</div>
@@ -157,6 +154,9 @@
 						const id = params.get('id')
 						console.log(id)
 
+						var inputElements = document.querySelectorAll('input');
+						var firstFourInputs = Array.from(inputElements).slice(0, 4);
+
 						if (id != null) {
 							let res = await axios({
 								url: 'http://localhost:8888/api/stockioadd/' + id,
@@ -164,9 +164,6 @@
 							})
 							data = res.data.data
 							console.log(data)
-
-							var inputElements = document.querySelectorAll('input');
-							var firstFourInputs = Array.from(inputElements).slice(0, 4);
 
 							firstFourInputs.forEach(i => {
 								if (i.name in data && i.name != 'id') {
@@ -176,6 +173,12 @@
 									i.value = data[i.name]
 								}
 
+							})
+						} else {
+							firstFourInputs.forEach(i => {
+								if (i.name != 'id') {
+									i.setAttribute('readonly', '')
+								}
 							})
 						}
 					},
