@@ -21,11 +21,6 @@
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-header">
 				<div class="layui-logo layui-hide-xs layui-bg-black">倉庫管理システム</div>
-				<!-- 头部区域（可配合layui 已有的水平导航） -->
-				<ul class="layui-nav layui-layout-right">
-					<button lay-event="logout" class="layui-btn layui-btn-primary "
-						style="right: 7px;top: 11px;position: absolute;color: white;">退出登录</button>
-				</ul>
 			</div>
 			<div class="layui-side layui-bg-black">
 				<div class="layui-side-scroll">
@@ -154,7 +149,7 @@
 					}
 				},
 				mounted() {
-
+					this.init()
 				},
 				methods: {
 					async init() {

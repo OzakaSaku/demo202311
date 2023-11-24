@@ -12,13 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.common.R;
 import com.example.entity.StoReq;
 import com.example.entity.Stock;
-<<<<<<< HEAD
-import com.example.req.StoReq;
-=======
 import com.example.entity.StocksVo;
->>>>>>> chen
 import com.example.service.StockService;
-import com.example.vo.StocksVo;
 
 import lombok.extern.slf4j.Slf4j;
 

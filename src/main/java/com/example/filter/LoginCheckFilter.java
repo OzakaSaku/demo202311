@@ -40,11 +40,7 @@ public class LoginCheckFilter implements Filter {
         String[] urls = new String[]{
                 "/login",
                 "/logout",
-<<<<<<< HEAD
-                "/api/**",
-=======
                 "/api"
->>>>>>> chen
         };
 
         //做调试用的

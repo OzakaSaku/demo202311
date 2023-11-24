@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class R<T> {
 
-    private Integer code; //编码：1成功，0和其它数字为失败
+    private Integer code; //编码：0成功，1和其它数字为失败
 
     private String msg; //错误信息
 
