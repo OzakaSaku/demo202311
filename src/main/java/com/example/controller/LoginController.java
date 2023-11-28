@@ -56,9 +56,9 @@ public class LoginController {
 		User u = userService.getById(userId);
         
 		if ( u == null || u.getDelFlg() == 1 || !Objects.equals(userId, u.getUserId())) {
-			return R.error("社員IDが間違っています。再度入力しなおしてください。");
+			return R.error("社員ID或いはパスワードが不一致、もう一度確認してください。");
 		}else if (!password.equals(u.getPassword())) {
-			return R.error("パスワードが間違っています。再度入力しなおしてください。");
+			return R.error("社員ID或いはパスワードが不一致、もう一度確認してください。");
 		}
 		request.getSession().setAttribute("userId", user.getUserId());
 		return R.success(user);
