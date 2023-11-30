@@ -77,7 +77,7 @@
 						<div class="layui-form-item">
 							<label class="layui-form-label" style="width: 140px">在庫数量</label>
 							<div class="layui-input-inline layui-input-wrap">
-								<input type="text" name="stockNum" class="layui-input">
+								<input type="number" name="stockNum" class="layui-input">
 							</div>
 						</div>
 
@@ -97,7 +97,7 @@
 							<label class="layui-form-label xrequired" style="width: 140px"><span
 									style="color:red">*</span>入出庫数量</label>
 							<div class="layui-input-inline layui-input-wrap">
-								<input type="text" name="ioNum" class="layui-input" lay-verify="required">
+								<input type="number" name="ioNum" class="layui-input" lay-verify="required|ioNummPass">
 							</div>
 						</div>
 
@@ -190,6 +190,23 @@
 				var util = layui.util;
 				var form = layui.form;
 				var layer = layui.layer;
+				// 自定义验证规则
+				form.verify({
+					ioNummPass: function (v) {
+						var stockNumInput = document.querySelector('input[name="stockNum"].layui-input');
+						var stockNumValue = stockNumInput.placeholder;
+						console.log(stockNumValue);
+						console.log(v)
+
+						var inputElement = document.querySelector('input[placeholder="请选择入出庫タイプ"].layui-input');
+						var value = inputElement.value;
+						console.log(value);
+						
+						if (value == '出庫' && parseInt(v) > parseInt(stockNumValue)) {
+							return '出庫数量は在庫数量より大きくできません!';
+						}
+					}
+				});
 				// 提交事件
 				form.on('submit(demo2)', async function (data) {
 					var field = data.field; // 获取表单字段值
